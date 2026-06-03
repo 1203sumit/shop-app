@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Order & Bank Ledger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div>
+                <h1>Sumit Store Operations</h1>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Order Logger & Live Bank Ledger</p>
+            </div>
+            <div class="revenue-card">
+                <p class="revenue-label">Shop Bank Balance</p>
+                <h2 class="revenue-display">₹<span id="shopBalance">0.00</span></h2>
+            </div>
+        </header>
+
+        <div class="portal-grid">
+            <div class="column-customer">
+                <section class="card simulation-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Incoming Customer Messages</h3>
+                        <button type="button" class="btn-status" id="generateMsgBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Simulate New Msg</button>
+                    </div>
+                    <div id="messageStream" class="message-stream-container">
+                        <div class="empty-state">No unread messages. Click "Simulate New Msg" to receive a customer request.</div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h3>Log Customer Request</h3>
+                    <form id="orderForm" novalidate>
+                        <div class="form-group">
+                            <label for="customerName">Customer Name</label>
+                            <input type="text" id="customerName" required placeholder="Name from message/call">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Delivery Address</label>
+                            <input type="text" id="address" required placeholder="Customer's address">
+                        </div>
+                        <div class="form-group">
+                            <label for="menuItem">Select Requested Item</label>
+                            <select id="menuItem" required>
+                                <option value="180">Paneer Tikka Roll - ₹180</option>
+                                <option value="220">Veg Deluxe Burger Combo - ₹220</option>
+                                <option value="260">Chicken Butter Masala Wrap - ₹260</option>
+                                <option value="90">Masala French Fries - ₹90</option>
+                                <option value="140">Stuffed Garlic Bread - ₹140</option>
+                                <option value="320">Capsicum & Onion Pizza - ₹320</option>
+                                <option value="110">Veg Fried Rice - ₹110</option>
+                                <option value="130">Hakka Noodles - ₹130</option>
+                                <option value="70">Chocolate Brownie - ₹70</option>
+                                <option value="40">Cold Coffee / Soda - ₹40</option>
+                            </select>
+                        </div>
+                        <span class="error-message" id="orderError"></span>
+                        <button type="submit" class="btn btn-primary">Create Order Record</button>
+                    </form>
+                </section>
+
+                <section class="card tracking-card">
+                    <h3>Live Order Tracking Flow</h3>
+                    <div id="activeTrackBox" class="track-box empty-state">
+                        No active order selected. Log an incoming request or click a row to track.
+                    </div>
+                </section>
+            </div>
+
+            <div class="column-kitchen">
+                <section class="card ledger-card">
+                    <h3>Active Orders & Settlement History</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>Value</th>
+                                    <th>Current Status</th>
+                                    <th>Advance Step</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kitchenTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

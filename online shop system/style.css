@@ -1,0 +1,355 @@
+:root {
+    --bg-dark: #090d16;
+    --bg-card: #111827;
+    --border-color: #1f2937;
+    --text-light: #f9fafb;
+    --text-muted: #9ca3af;
+    --primary: #f97316;       /* Food-delivery orange branding */
+    --primary-hover: #ea580c;
+    --whatsapp-green: #25d366;
+    --status-placed: #3b82f6;
+    --status-preparing: #eab308;
+    --status-shipping: #a855f7;
+    --status-delivered: #22c55e;
+    --status-danger: #f87171; /* Cancellation/Refund red */
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Roboto, sans-serif; 
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container { 
+    max-width: 1250px; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.5rem; 
+}
+
+/* Header & Financial Metrics */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.revenue-card {
+    background: linear-gradient(135deg, #f97316, #c2410c);
+    color: white;
+    padding: 1rem 1.75rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+    text-align: right;
+}
+
+.revenue-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+}
+
+.revenue-display {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* Portal Layout Responsive Grid */
+.portal-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 1.5rem; 
+}
+
+@media (min-width: 900px) { 
+    .portal-grid { 
+        grid-template-columns: 420px 1fr; 
+    } 
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h3 { 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    color: var(--text-muted); 
+    margin-bottom: 1rem; 
+}
+
+/* Forms & Input Elements */
+form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+}
+
+.form-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.4rem; 
+}
+
+label { 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    font-weight: 600; 
+}
+
+input, select {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    padding: 0.7rem;
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+input:focus, select:focus { 
+    border-color: var(--primary); 
+}
+
+/* Buttons System */
+.btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn:hover { 
+    background-color: var(--primary-hover); 
+}
+
+.btn-status {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    color: #e5e7eb;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-status:hover { 
+    background-color: #374151; 
+    border-color: var(--text-muted);
+}
+
+.btn-cancel {
+    background-color: rgba(248, 113, 113, 0.05);
+    border: 1px solid var(--status-danger);
+    color: var(--status-danger);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-cancel:hover {
+    background-color: var(--status-danger);
+    color: var(--bg-dark);
+    font-weight: 600;
+}
+
+.error-message { 
+    color: var(--status-danger); 
+    font-size: 0.75rem; 
+    min-height: 14px; 
+}
+
+/* Chat Message Simulator Component */
+.message-stream-container {
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-right: 0.25rem;
+}
+
+.msg-bubble {
+    background-color: var(--bg-dark);
+    border-left: 4px solid var(--whatsapp-green);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    animation: slideIn 0.3s ease-out;
+}
+
+.msg-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.msg-body {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.btn-populate {
+    background-color: rgba(37, 211, 102, 0.1);
+    border: 1px solid var(--whatsapp-green);
+    color: var(--whatsapp-green);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-populate:hover {
+    background-color: var(--whatsapp-green);
+    color: var(--bg-dark);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Badges for Order Statuses */
+.badge { 
+    padding: 0.25rem 0.5rem; 
+    border-radius: 4px; 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.badge-PLACED { background: rgba(59, 130, 246, 0.15); color: var(--status-placed); }
+.badge-PREPARING { background: rgba(234, 179, 8, 0.15); color: var(--status-preparing); }
+.badge-OUT_FOR_DELIVERY { background: rgba(168, 85, 247, 0.15); color: var(--status-shipping); }
+.badge-DELIVERED { background: rgba(34, 197, 94, 0.15); color: var(--status-delivered); }
+.badge-CANCELLED { background: rgba(248, 113, 113, 0.15); color: var(--status-danger); }
+
+/* Live Order Tracking Visualizer */
+.track-box { 
+    background-color: var(--bg-dark); 
+    border-radius: 6px; 
+    padding: 1.25rem; 
+    border: 1px dashed var(--border-color); 
+}
+
+.empty-state { 
+    color: var(--text-muted); 
+    font-size: 0.85rem; 
+    text-align: center; 
+}
+
+.status-step { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.75rem; 
+    margin-bottom: 0.75rem; 
+    font-size: 0.9rem; 
+    color: var(--text-muted);
+}
+
+.status-step:last-child { 
+    margin-bottom: 0; 
+}
+
+.step-dot { 
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%; 
+    background-color: var(--border-color); 
+}
+
+.step-active {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.step-active .step-dot { 
+    background-color: var(--primary); 
+    box-shadow: 0 0 8px var(--primary); 
+}
+
+/* Master Data Table Layout */
+.table-wrapper { 
+    overflow-x: auto; 
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+    font-size: 0.85rem; 
+}
+
+th, td { 
+    padding: 0.85rem 1rem; 
+    border-bottom: 1px solid var(--border-color); 
+    vertical-align: middle;
+}
+
+th { 
+    color: var(--text-muted); 
+    background-color: #0b0f19; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    font-size: 0.7rem; 
+    letter-spacing: 0.05em;
+}
+
+td {
+    background-color: var(--bg-card);
+}
+
+tr:hover td {
+    background-color: rgba(255, 255, 255, 0.01);
+}
