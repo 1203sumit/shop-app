@@ -1,41 +1,90 @@
 # Merchant Dashboard & Auto-Ledger System
 
-This is a full-stack web application designed for small business merchants to digitize their order management and financial tracking. The frontend features a live operational dashboard that simulates real-time customer messages (e.g., from WhatsApp), provides one-click data auto-fill, and tracks order fulfillment statuses.
+## Overview
 
-The backend is built with **Python (Flask)** and communicates with a **MySQL database** to process data streams securely. The system features a built-in automated banking ledger engine: moving an order status to "DELIVERED" instantly credits the shop's live balance, while moving a delivered order to "CANCELLED" automatically triggers a debit refund log. This eliminates manual ledger errors by perfectly syncing order statuses with financial records.
+Merchant Dashboard & Auto-Ledger System is a full-stack web application designed to help small business merchants manage customer orders and track financial transactions digitally. The platform provides a real-time operational dashboard, automated order processing, and an intelligent ledger management system that keeps financial records synchronized with order status updates.
 
----
+## Key Features
 
-### 🛠️ Testing Strategy & Execution Points
+* Real-time customer message simulation similar to WhatsApp order requests.
+* One-click Auto-Fill functionality for customer details and order information.
+* Order lifecycle management with status tracking:
 
-To ensure the application functions perfectly before production deployment, verify these three main operational pillars:
+  * Placed
+  * Preparing
+  * Out for Delivery
+  * Delivered
+  * Cancelled
+* Automated banking ledger system for accurate financial tracking.
+* Live shop balance updates based on order delivery and cancellation events.
+* Secure backend integration using Flask and MySQL.
+* Persistent database storage with transaction logging.
 
-1. **API Integration Check:** Open the browser's developer console (F12) to ensure the frontend successfully sends `GET`, `POST`, and `PUT` web requests to the Flask server (`http://127.0.0.1:5000`) without CORS blocks or connection failures.
-2. **Database Verification:** After performing any dashboard action, query the XAMPP phpMyAdmin tables to ensure data is writing permanently to disk and that `order_id` fields auto-increment correctly.
-3. **Ledger Calculation Engine:** Cross-check that the frontend display balance matches the mathematical sum of the `amount` columns inside the `bank_transactions` table after multiple simulated state changes.
+## Technology Stack
 
----
+### Frontend
 
-### 🧪 Test Cases (Positive & Negative)
+* HTML
+* CSS
+* JavaScript
 
-#### Positive Test Cases (Happy Path)
-These test cases check if the system behaves correctly when valid data is entered.
+### Backend
 
-| ID |                   Test Scenario |                    Expected Result |
+* Python (Flask)
 
-| **TC-01** | Click **"Simulate New Msg"** button. | A message bubble appears instantly in the stream with mock data. |
-| **TC-02** | Click **"Auto-Fill Form"** on a message bubble. | Name, Address, and Price dropdown populate correctly with no manual typing. |
-| **TC-03** | Submit a fully filled valid order form. | The order appears in the Kitchen Queue table, and fields reset cleanly. |
-| **TC-04** | Click **"Move Step"** on a new order row. | The status badge updates sequentially (PLACED -> PREPARING -> OUT_FOR_DELIVERY). |
-| **TC-05** | Advance an order status to **"DELIVERED"**. | The status locks, a row enters `bank_transactions`, and the Shop Bank Balance increases. |
+### Database
 
-#### Negative Test Cases (Error Handling)
-These test cases check if the system safely blocks invalid actions without crashing.
+* MySQL (XAMPP/phpMyAdmin)
 
-| ID             | Test Scenario |                                                  Expected Result |
+## Auto-Ledger Engine
 
-| **TC-06** | Submit the order form with the **Customer Name field blank**. | The UI blocks submission or backend returns an error; no row is added to SQL. |
-| **TC-07** | Submit the order form with the **Address field blank**. | The database rejects the blank value, preventing empty records in the dashboard. |
-| **TC-08** | Attempt to click **"Move Step"** on a cancelled order. | The action is disabled or ignored; status remains strictly `CANCELLED`. |
-| **TC-09** | Shut down **MySQL in XAMPP** and try to load the page. | The app handles the drop gracefully; balance shows `0.00` and console catches the connection error. |
-| **TC-10** | Cancel an order that was **never delivered** (e.g., while still `PREPARING`). | Status switches directly to `CANCELLED`, but **no** refund row is added to the bank table since no money was collected. |
+The application includes an automated financial ledger system that eliminates manual accounting errors.
+
+* When an order status changes to **DELIVERED**, the order amount is automatically credited to the merchant's account.
+* When a delivered order is later changed to **CANCELLED**, a refund transaction is automatically generated and the corresponding amount is debited from the account.
+* All financial activities are recorded in the `bank_transactions` table, ensuring complete transaction traceability.
+
+## Testing Strategy
+
+### 1. API Integration Verification
+
+* Verify successful GET, POST, and PUT requests between the frontend and Flask backend.
+* Ensure no CORS issues or connection failures occur.
+* Monitor requests using browser Developer Tools (F12).
+
+### 2. Database Verification
+
+* Confirm all dashboard actions are correctly stored in MySQL.
+* Validate auto-increment behavior of `order_id`.
+* Verify data persistence through phpMyAdmin.
+
+### 3. Ledger Accuracy Validation
+
+* Compare the displayed shop balance with the total transaction amount stored in the `bank_transactions` table.
+* Ensure all credits and debits are reflected accurately after status updates.
+
+## Test Cases
+
+### Positive Test Cases
+
+| ID    | Test Scenario              | Expected Result                                                              |
+| ----- | -------------------------- | ---------------------------------------------------------------------------- |
+| TC-01 | Click "Simulate New Msg"   | A new customer message appears instantly in the message stream.              |
+| TC-02 | Click "Auto-Fill Form"     | Customer Name, Address, and Price fields are populated automatically.        |
+| TC-03 | Submit a valid order form  | Order is added to the Kitchen Queue and form fields reset successfully.      |
+| TC-04 | Click "Move Step"          | Order status progresses sequentially: PLACED → PREPARING → OUT_FOR_DELIVERY. |
+| TC-05 | Mark an order as DELIVERED | Transaction is recorded, balance increases, and order status is locked.      |
+
+### Negative Test Cases
+
+| ID    | Test Scenario                            | Expected Result                                                         |
+| ----- | ---------------------------------------- | ----------------------------------------------------------------------- |
+| TC-06 | Submit form with blank Customer Name     | Submission is rejected and no database record is created.               |
+| TC-07 | Submit form with blank Address           | Validation prevents record creation and displays an error.              |
+| TC-08 | Click "Move Step" on a cancelled order   | Action is disabled and status remains CANCELLED.                        |
+| TC-09 | Stop MySQL service and load application  | Application handles the failure gracefully and logs the database error. |
+| TC-10 | Cancel an order that was never delivered | Status changes to CANCELLED but no refund transaction is generated.     |
+
+## Project Objective
+
+The primary goal of this project is to automate order management and financial bookkeeping for small businesses by integrating operational workflows with a real-time accounting ledger. This ensures accurate financial records, improved efficiency, and reduced manual effort.
